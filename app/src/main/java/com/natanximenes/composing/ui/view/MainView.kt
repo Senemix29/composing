@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -28,7 +27,7 @@ import com.natanximenes.composing.util.SampleData
 
 @Composable
 fun Conversation(messages: List<Message>) {
-    LazyColumn(Modifier.background(color = MaterialTheme.colors.background)) {
+    LazyColumn() {
         items(messages) { message ->
             MessageCard(message)
         }
@@ -61,7 +60,9 @@ private fun MessageBody(modifier: Modifier, message: Message, isExpanded: Boolea
             shape = MaterialTheme.shapes.medium,
             elevation = 1.dp,
             color = surfaceColor,
-            modifier = Modifier.animateContentSize().padding(1.dp)
+            modifier = Modifier
+                .animateContentSize()
+                .padding(1.dp)
         ) {
             Text(
                 text = "message: ${message.text}",
@@ -91,10 +92,11 @@ private fun ProfileImage(@DrawableRes profilePic: Int) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true,
 )
-
 @Composable
 fun DefaultPreview() {
     ComposingTheme {
-        Conversation(messages = SampleData().conversationSample)
+        Surface(color = MaterialTheme.colors.background) {
+            Conversation(messages = SampleData().conversationSample)
+        }
     }
 }
